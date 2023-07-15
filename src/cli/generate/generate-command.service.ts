@@ -1,13 +1,9 @@
 import Ajv from 'ajv';
+import { DereferenceService, GeneratorService, LoadService, ParserService, Printer } from 'kodgen';
 import { OpenAPI } from 'openapi-types';
 import { Arguments } from 'yargs';
 import configSchema from '../../../assets/commands/generate/config-schema.json';
-import { DereferenceService } from '../../core/dereference/dereference.service';
-import { LoadService } from '../../core/load/load.service';
-import { ParserService } from '../../core/parser/parser.service';
-import { Printer } from '../../core/printer/printer';
-import { getAjvValidateErrorMessage, loadFile } from '../../core/utils';
-import { GeneratorService } from '../../generators/generator.service';
+import { getAjvValidateErrorMessage, loadFile } from '../../utils';
 import { IGenerateCommandArgs, IGenerateCommandConfig } from './generate-command.model';
 
 export class GenerateCommandService {

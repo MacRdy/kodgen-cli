@@ -9,8 +9,8 @@ import { validateCommandModule } from './validate/validate.command';
 
 void yargs(hideBin(process.argv))
 	.scriptName('kodgen')
-	.command<any>(generateCommandModule)
-	.command<any>(validateCommandModule)
+	.command(generateCommandModule)
+	.command(validateCommandModule)
 	.command(
 		'$0',
 		'Kodgen CLI usage',

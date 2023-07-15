@@ -1,7 +1,6 @@
+import { Hooks, Printer } from 'kodgen';
 import { Arguments, CommandBuilder, CommandModule } from 'yargs';
-import { Hooks } from '../../core/hooks/hooks';
-import { Printer } from '../../core/printer/printer';
-import { loadHooksFile } from '../../core/utils';
+import { loadHooksFile } from '../../utils';
 import { IGenerateCommandArgs } from './generate-command.model';
 import { GenerateCommandService } from './generate-command.service';
 

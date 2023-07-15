@@ -1,11 +1,9 @@
 import Ajv from 'ajv';
+import { LoadService, ParserService, Printer } from 'kodgen';
 import { OpenAPI } from 'openapi-types';
 import { Arguments } from 'yargs';
 import configSchema from '../../../assets/commands/validate/config-schema.json';
-import { LoadService } from '../../core/load/load.service';
-import { ParserService } from '../../core/parser/parser.service';
-import { Printer } from '../../core/printer/printer';
-import { getAjvValidateErrorMessage, loadFile } from '../../core/utils';
+import { getAjvValidateErrorMessage, loadFile } from '../../utils';
 import { IValidateCommandArgs, IValidateCommandConfig } from './validate-command.model';
 
 export class ValidateCommandService {
