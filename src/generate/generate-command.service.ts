@@ -2,6 +2,8 @@ import Ajv from 'ajv';
 import {
 	DereferenceService,
 	GeneratorService,
+	HookFn,
+	IHook,
 	LoadService,
 	ParserService,
 	Printer,
@@ -10,12 +12,13 @@ import {
 import { OpenAPI } from 'openapi-types';
 import { Arguments } from 'yargs';
 import configSchema from '../../assets/generate-command-schema.json';
-import { loadFile } from '../utils';
+import { loadFileIfExists } from '../utils';
 import { IGenerateCommandArgs, IGenerateCommandConfig } from './generate-command.model';
 
 export class GenerateCommandService {
 	private readonly generatorService = new GeneratorService();
 	private readonly parserService = new ParserService();
+	private readonly loadService = new LoadService();
 
 	async start(config: IGenerateCommandConfig): Promise<void> {
 		Printer.info('Started.');
@@ -62,7 +65,10 @@ export class GenerateCommandService {
 
 	// eslint-disable-next-line sonarjs/cognitive-complexity
 	async getConfig(argv: Arguments<IGenerateCommandArgs>): Promise<IGenerateCommandConfig> {
-		const userConfig = await loadFile<IGenerateCommandArgs>(argv.config, 'Config not found');
+		const userConfig = await loadFileIfExists<IGenerateCommandArgs>(
+			'Config not found',
+			argv.config,
+		);
 
 		const config: IGenerateCommandArgs = {
 			input: argv.input?.trim() ?? this.normalizePath(userConfig?.input, argv.config),
@@ -99,22 +105,37 @@ export class GenerateCommandService {
 		}
 
 		if (config.generatorConfigFile) {
-			config.generatorConfig = await loadFile(
-				config.generatorConfigFile,
+			config.generatorConfig = await loadFileIfExists(
 				'Generator config not found',
+				config.generatorConfigFile,
 			);
 		}
 
 		return config;
 	}
 
-	private normalizePath(path?: string, configPath?: string): string | undefined {
-		if (!path) {
-			return undefined;
+	async loadHooksFile(path?: string): Promise<IHook[]> {
+		const hooks: IHook[] = [];
+
+		const hooksObj = await loadFileIfExists<Record<string, HookFn>>(
+			'Hooks file not found',
+			path,
+		);
+
+		if (hooksObj) {
+			for (const [name, fn] of Object.entries(hooksObj)) {
+				hooks.push({ name, fn });
+			}
 		}
 
-		const loadService = new LoadService();
+		return hooks;
+	}
 
-		return loadService.normalizePath(path, configPath);
+	private normalizePath(path?: string, configPath?: string): string | undefined {
+		if (!path || !configPath) {
+			return path;
+		}
+
+		return this.loadService.normalizePath(path, configPath);
 	}
 }

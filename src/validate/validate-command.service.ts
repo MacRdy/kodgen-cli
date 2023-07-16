@@ -3,7 +3,7 @@ import { LoadService, ParserService, Printer, generateAjvErrorMessage } from 'ko
 import { OpenAPI } from 'openapi-types';
 import { Arguments } from 'yargs';
 import configSchema from '../../assets/validate-command-schema.json';
-import { loadFile } from '../utils';
+import { loadFileIfExists } from '../utils';
 import { IValidateCommandArgs, IValidateCommandConfig } from './validate-command.model';
 
 export class ValidateCommandService {
@@ -32,7 +32,10 @@ export class ValidateCommandService {
 	}
 
 	async getConfig(argv: Arguments<IValidateCommandArgs>): Promise<IValidateCommandConfig> {
-		const userConfig = await loadFile<IValidateCommandArgs>(argv.config, 'Config not found');
+		const userConfig = await loadFileIfExists<IValidateCommandArgs>(
+			'Config not found',
+			argv.config,
+		);
 
 		const config: IValidateCommandArgs = {
 			input: argv.input?.trim() ?? userConfig?.input,

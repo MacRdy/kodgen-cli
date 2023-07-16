@@ -1,4 +1,4 @@
-import { FileService, HookFn, IHook } from 'kodgen';
+import { FileService } from 'kodgen';
 import { EOL } from 'os';
 
 export const handleError = (message: string, error: Error): never => {
@@ -9,9 +9,9 @@ export const handleError = (message: string, error: Error): never => {
 	process.exit(1);
 };
 
-export const loadFile = async <T>(
+export const loadFileIfExists = async <T>(
+	notFoundMessage: string,
 	path?: string,
-	notFoundMessage?: string,
 ): Promise<T | undefined> => {
 	if (!path) {
 		return undefined;
@@ -19,25 +19,9 @@ export const loadFile = async <T>(
 
 	const fileService = new FileService();
 
-	const configPath = path.trim();
-
-	if (configPath && !fileService.exists(configPath)) {
+	if (!fileService.exists(path)) {
 		throw new Error(notFoundMessage);
 	}
 
-	return await fileService.loadFile<T>(configPath);
-};
-
-export const loadHooksFile = async (path?: string): Promise<IHook[]> => {
-	const hooks: IHook[] = [];
-
-	const hooksObj = await loadFile<Record<string, HookFn>>(path, 'Hooks file not found');
-
-	if (hooksObj) {
-		for (const [name, fn] of Object.entries(hooksObj)) {
-			hooks.push({ name, fn });
-		}
-	}
-
-	return hooks;
+	return await fileService.loadFile<T>(path);
 };
