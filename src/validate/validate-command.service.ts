@@ -45,9 +45,7 @@ export class ValidateCommandService {
 		const validate = new Ajv({ allErrors: true }).compile<IValidateCommandConfig>(configSchema);
 
 		if (!validate(config)) {
-			throw new Error(
-				generateAjvErrorMessage('Invalid command configuration', validate.errors),
-			);
+			throw new Error(generateAjvErrorMessage('Invalid command options', validate.errors));
 		}
 
 		return config;

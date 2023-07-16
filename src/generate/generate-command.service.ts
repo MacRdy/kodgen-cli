@@ -99,9 +99,7 @@ export class GenerateCommandService {
 		const validate = new Ajv({ allErrors: true }).compile<IGenerateCommandConfig>(configSchema);
 
 		if (!validate(config)) {
-			throw new Error(
-				generateAjvErrorMessage('Invalid command configuration', validate.errors),
-			);
+			throw new Error(generateAjvErrorMessage('Invalid command options', validate.errors));
 		}
 
 		if (config.generatorConfigFile) {
