@@ -8,8 +8,8 @@ jest.mock('../../core/utils');
 const loadFileMock = jest.mocked(loadFile);
 
 const correctConfig: IGenerateCommandConfig = {
-	generatorPackage: 'generator-package',
-	generatorName: 'generator-name',
+	package: 'generator-package',
+	generator: 'generator-name',
 	generatorConfigFile: undefined,
 	input: 'input',
 	output: 'output',

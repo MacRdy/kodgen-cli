@@ -38,7 +38,7 @@ export class GenerateCommandService {
 
 		const document = parser.parse(spec, config);
 
-		const generator = this.generatorService.get(config.generatorPackage, config.generatorName);
+		const generator = this.generatorService.get(config.package, config.generator);
 
 		Printer.info('Transformation...');
 
@@ -60,8 +60,8 @@ export class GenerateCommandService {
 		const config: IGenerateCommandArgs = {
 			input: argv.input?.trim() ?? this.normalizePath(userConfig?.input, argv.config),
 			insecure: argv.insecure ?? userConfig?.insecure,
-			generatorPackage: argv.generatorPackage?.trim() ?? userConfig?.generatorPackage,
-			generatorName: argv.generatorName?.trim() ?? userConfig?.generatorName,
+			package: argv.package?.trim() ?? userConfig?.package,
+			generator: argv.generator?.trim() ?? userConfig?.generator,
 			generatorConfigFile:
 				argv.generatorConfigFile?.trim() ??
 				this.normalizePath(userConfig?.generatorConfigFile, argv.config),

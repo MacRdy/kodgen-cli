@@ -10,12 +10,12 @@ const generateCommandBuilder: CommandBuilder<Record<string, never>, IGenerateCom
 			type: 'string',
 			description: 'Config file',
 		})
-		.option('generatorPackage', {
+		.option('package', {
 			alias: 'p',
 			type: 'string',
 			description: 'Generator package',
 		})
-		.option('generatorName', {
+		.option('generator', {
 			alias: 'g',
 			type: 'string',
 			description: 'Generator name',

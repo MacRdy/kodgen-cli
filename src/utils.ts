@@ -1,16 +1,4 @@
-import { ErrorObject } from 'ajv';
 import { FileService, HookFn, IHook } from 'kodgen';
-
-export const getAjvValidateErrorMessage = (
-	errors?: ErrorObject[] | null,
-	title = 'Invalid configuration',
-): string => {
-	const message = errors
-		?.map(e => [e.instancePath, e.message].filter(Boolean).join(' '))
-		.join('\n- ');
-
-	return `${title}:\n- ${message ?? 'Unknown error'}`;
-};
 
 export const loadFile = async <T>(
 	path?: string,
