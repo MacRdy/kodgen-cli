@@ -2,11 +2,10 @@
 	"name": "kodgen-cli",
 	"version": "0.0.1",
 	"description": "",
-	"main": "dist/src/cli/cli.js",
+	"main": "dist/src/index.js",
 	"bin": {
-		"kodgen": "dist/src/cli/cli.js"
+		"kodgen": "dist/src/index.js"
 	},
-	"types": "dist/src/index.d.ts",
 	"scripts": {
 		"build": "rimraf dist && mkdir dist && tsc --project tsconfig.build.json",
 		"test": "jest",
@@ -48,7 +47,7 @@
 	},
 	"dependencies": {
 		"ajv": "^8.11.2",
-		"kodgen": "^0.0.1",
+		"kodgen": "file:kodgen-0.0.1.tgz",
 		"openapi-types": "^12.0.2",
 		"yargs": "^17.6.0"
 	}

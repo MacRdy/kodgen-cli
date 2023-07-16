@@ -1,9 +1,9 @@
 import Ajv from 'ajv';
-import { LoadService, ParserService, Printer } from 'kodgen';
+import { LoadService, ParserService, Printer, generateAjvErrorMessage } from 'kodgen';
 import { OpenAPI } from 'openapi-types';
 import { Arguments } from 'yargs';
-import configSchema from '../../../assets/commands/validate/config-schema.json';
-import { getAjvValidateErrorMessage, loadFile } from '../../utils';
+import configSchema from '../../assets/validate-command-schema.json';
+import { loadFile } from '../utils';
 import { IValidateCommandArgs, IValidateCommandConfig } from './validate-command.model';
 
 export class ValidateCommandService {
@@ -26,7 +26,7 @@ export class ValidateCommandService {
 
 		Printer.info('Validation...');
 
-		await parser.validate(rawDefinition);
+		parser.validate(rawDefinition);
 
 		Printer.info('Success.');
 	}
@@ -43,7 +43,7 @@ export class ValidateCommandService {
 
 		if (!validate(config)) {
 			throw new Error(
-				getAjvValidateErrorMessage(validate.errors, 'Invalid command configuration'),
+				generateAjvErrorMessage('Invalid command configuration', validate.errors),
 			);
 		}
 
