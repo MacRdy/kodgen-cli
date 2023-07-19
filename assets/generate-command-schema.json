@@ -67,6 +67,10 @@
 			"type": "string",
 			"description": "Hooks file"
 		},
+		"silent": {
+			"type": "boolean",
+			"description": "Suppress all informational messages"
+		},
 		"verbose": {
 			"type": "boolean",
 			"description": "Detailed information about the process"

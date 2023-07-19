@@ -1,4 +1,4 @@
-import { Hooks, Printer } from 'kodgen';
+import { Hooks, Printer, PrinterLevel } from 'kodgen';
 import { Arguments, CommandBuilder, CommandModule } from 'yargs';
 import { IGenerateCommandArgs } from './generate-command.model';
 import { GenerateCommandService } from './generate-command.service';
@@ -75,6 +75,10 @@ const generateCommandBuilder: CommandBuilder<Record<string, never>, IGenerateCom
 			type: 'string',
 			description: 'Hooks file',
 		})
+		.option('silent', {
+			type: 'boolean',
+			description: 'Suppress all informational messages',
+		})
 		.option('verbose', {
 			type: 'boolean',
 			description: 'Detailed information about the process',
@@ -91,11 +95,15 @@ const generateCommandHandler = async (argv: Arguments<IGenerateCommandArgs>): Pr
 
 	const config = await commandService.getConfig(argv);
 
-	if (config.verbose) {
-		Printer.setLevel('verbose');
+	if (config.silent) {
+		Printer.setLevel(PrinterLevel.Silent);
 	}
 
-	const hooks = await commandService.loadHooksFile(config.hooksFile);
+	if (config.verbose) {
+		Printer.setLevel(PrinterLevel.Verbose);
+	}
+
+	const hooks = await commandService.loadHooks(config.hooksFile);
 	Hooks.init(hooks);
 
 	await commandService.start(config);

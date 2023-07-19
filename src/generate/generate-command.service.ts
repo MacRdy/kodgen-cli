@@ -92,6 +92,7 @@ export class GenerateCommandService {
 			excludePaths: argv.excludePaths ?? userConfig?.excludePaths,
 			hooksFile:
 				argv.hooksFile?.trim() ?? this.normalizePath(userConfig?.hooksFile, argv.config),
+			silent: argv.silent ?? userConfig?.silent,
 			verbose: argv.verbose ?? userConfig?.verbose,
 			eol: argv.eol ?? userConfig?.eol,
 		};
@@ -112,7 +113,7 @@ export class GenerateCommandService {
 		return config;
 	}
 
-	async loadHooksFile(path?: string): Promise<IHook[]> {
+	async loadHooks(path?: string): Promise<IHook[]> {
 		const hooks: IHook[] = [];
 
 		const hooksObj = await loadFileIfExists<Record<string, HookFn>>(
