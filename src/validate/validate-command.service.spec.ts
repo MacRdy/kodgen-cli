@@ -14,7 +14,7 @@ const correctConfig: IValidateCommandConfig = {
 
 describe('validate cli command', () => {
 	beforeEach(() => {
-		loadFileIfExistsMock.mockClear();
+		loadFileIfExistsMock.mockReset();
 	});
 
 	it('should parse inline arguments correctly', async () => {

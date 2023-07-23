@@ -30,7 +30,7 @@ const correctConfig: IGenerateCommandConfig = {
 
 describe('generate cli command', () => {
 	beforeEach(() => {
-		loadFileIfExistsMock.mockClear();
+		loadFileIfExistsMock.mockReset();
 	});
 
 	it('should parse inline arguments correctly', async () => {
@@ -139,7 +139,7 @@ describe('generate cli command', () => {
 		const service = new GenerateCommandService();
 
 		beforeEach(() => {
-			loadFileIfExistsMock.mockClear();
+			loadFileIfExistsMock.mockReset();
 		});
 
 		it('should return empty array with no file', async () => {
