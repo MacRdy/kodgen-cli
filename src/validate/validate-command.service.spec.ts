@@ -1,11 +1,11 @@
 import { Arguments } from 'yargs';
-import { loadFile } from '../../core/utils';
+import { loadFileIfExists } from '../utils';
 import { IValidateCommandArgs, IValidateCommandConfig } from './validate-command.model';
 import { ValidateCommandService } from './validate-command.service';
 
-jest.mock('../../core/utils');
+jest.mock('../utils');
 
-const getCommandConfigMock = jest.mocked(loadFile);
+const loadFileIfExistsMock = jest.mocked(loadFileIfExists);
 
 const correctConfig: IValidateCommandConfig = {
 	input: 'input',
@@ -14,7 +14,7 @@ const correctConfig: IValidateCommandConfig = {
 
 describe('validate cli command', () => {
 	beforeEach(() => {
-		getCommandConfigMock.mockClear();
+		loadFileIfExistsMock.mockClear();
 	});
 
 	it('should parse inline arguments correctly', async () => {
@@ -33,7 +33,7 @@ describe('validate cli command', () => {
 	});
 
 	it('should parse config correctly', async () => {
-		getCommandConfigMock.mockResolvedValueOnce(correctConfig);
+		loadFileIfExistsMock.mockResolvedValueOnce(correctConfig);
 
 		const service = new ValidateCommandService();
 
@@ -49,7 +49,7 @@ describe('validate cli command', () => {
 	});
 
 	it('should override config parameters', async () => {
-		getCommandConfigMock.mockResolvedValueOnce(correctConfig);
+		loadFileIfExistsMock.mockResolvedValueOnce(correctConfig);
 
 		const service = new ValidateCommandService();
 

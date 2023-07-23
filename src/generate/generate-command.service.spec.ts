@@ -1,11 +1,12 @@
+import { IHook } from 'kodgen';
 import { Arguments } from 'yargs';
-import { loadFile } from '../../core/utils';
+import { loadFileIfExists } from '../utils';
 import { IGenerateCommandArgs, IGenerateCommandConfig } from './generate-command.model';
 import { GenerateCommandService } from './generate-command.service';
 
-jest.mock('../../core/utils');
+jest.mock('../utils');
 
-const loadFileMock = jest.mocked(loadFile);
+const loadFileIfExistsMock = jest.mocked(loadFileIfExists);
 
 const correctConfig: IGenerateCommandConfig = {
 	package: 'generator-package',
@@ -22,13 +23,14 @@ const correctConfig: IGenerateCommandConfig = {
 	templateDataFile: 'custom-template-data.json',
 	skipTemplates: ['tpl-1'],
 	insecure: true,
+	silent: true,
 	verbose: true,
 	eol: 'LF',
 } as const;
 
 describe('generate cli command', () => {
 	beforeEach(() => {
-		loadFileMock.mockClear();
+		loadFileIfExistsMock.mockClear();
 	});
 
 	it('should parse inline arguments correctly', async () => {
@@ -37,6 +39,7 @@ describe('generate cli command', () => {
 		const args: Arguments<IGenerateCommandArgs> = {
 			$0: '',
 			_: [],
+			package: ' generator-package',
 			generator: '  generator-name ',
 			input: ' input ',
 			output: ' output ',
@@ -49,6 +52,7 @@ describe('generate cli command', () => {
 			templateDataFile: ' custom-template-data.json ',
 			skipTemplates: ['tpl-1'],
 			insecure: true,
+			silent: true,
 			verbose: true,
 			eol: 'LF',
 		};
@@ -59,7 +63,7 @@ describe('generate cli command', () => {
 	});
 
 	it('should parse config correctly', async () => {
-		loadFileMock.mockResolvedValueOnce(correctConfig);
+		loadFileIfExistsMock.mockResolvedValueOnce(correctConfig);
 
 		const service = new GenerateCommandService();
 
@@ -75,7 +79,7 @@ describe('generate cli command', () => {
 	});
 
 	it('should override config parameters', async () => {
-		loadFileMock.mockResolvedValueOnce(correctConfig);
+		loadFileIfExistsMock.mockResolvedValueOnce(correctConfig);
 
 		const service = new GenerateCommandService();
 
@@ -92,14 +96,15 @@ describe('generate cli command', () => {
 	});
 
 	it('should load generator config', async () => {
-		loadFileMock.mockResolvedValueOnce(undefined);
-		loadFileMock.mockResolvedValueOnce({ var: true });
+		loadFileIfExistsMock.mockResolvedValueOnce(undefined);
+		loadFileIfExistsMock.mockResolvedValueOnce({ var: true });
 
 		const service = new GenerateCommandService();
 
 		const args: Arguments<IGenerateCommandArgs> = {
 			$0: '',
 			_: [],
+			package: 'package',
 			generator: 'generator',
 			generatorConfigFile: 'generatorConfigFile',
 			input: 'input',
@@ -109,6 +114,7 @@ describe('generate cli command', () => {
 		const config = await service.getConfig(args);
 
 		expect<IGenerateCommandConfig>(config).toStrictEqual({
+			package: 'package',
 			generator: 'generator',
 			generatorConfigFile: 'generatorConfigFile',
 			generatorConfig: { var: true },
@@ -123,8 +129,40 @@ describe('generate cli command', () => {
 			skipValidation: undefined,
 			templateDataFile: undefined,
 			templateDir: undefined,
+			silent: undefined,
 			verbose: undefined,
 			eol: undefined,
+		});
+	});
+
+	describe('loadHooks', () => {
+		const service = new GenerateCommandService();
+
+		beforeEach(() => {
+			loadFileIfExistsMock.mockClear();
+		});
+
+		it('should return empty array with no file', async () => {
+			await expect(service.loadHooks()).resolves.toStrictEqual([]);
+
+			expect(loadFileIfExists).toBeCalledWith('Hooks file not found', undefined);
+		});
+
+		it('should load hooks file', async () => {
+			const mockFileData = { foo: () => 'bar' };
+
+			loadFileIfExistsMock.mockResolvedValueOnce(mockFileData);
+
+			const expected: IHook[] = [
+				{
+					name: 'foo',
+					fn: mockFileData.foo,
+				},
+			];
+
+			await expect(service.loadHooks('path')).resolves.toStrictEqual(expected);
+
+			expect(loadFileIfExists).toBeCalledWith('Hooks file not found', 'path');
 		});
 	});
 });
