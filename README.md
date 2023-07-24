@@ -1,5 +1,7 @@
 # Kodgen CLI
 
+[![npm](https://img.shields.io/npm/v/kodgen-cli)](https://www.npmjs.com/package/kodgen-cli)
+
 Just a CLI for [`kodgen`](https://github.com/MacRdy/kodgen)
 
 ## Installation
