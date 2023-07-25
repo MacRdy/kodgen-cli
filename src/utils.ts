@@ -4,7 +4,10 @@ import { EOL } from 'os';
 export const handleError = (message: string, error: Error): never => {
 	const errorMessage = message || error?.message || 'An error has occurred';
 
-	process.stderr.write(`Error: ${errorMessage}` + EOL);
+	const redColor = '\x1b[31m';
+	const resetColor = '\x1b[0m';
+
+	process.stderr.write(redColor + `Error: ${errorMessage}` + resetColor + EOL);
 
 	process.exit(1);
 };
