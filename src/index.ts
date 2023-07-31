@@ -2,9 +2,9 @@
 
 import yargs from 'yargs';
 import { hideBin } from 'yargs/helpers';
-import { generateCommandModule } from './generate/generate.command';
-import { handleError } from './utils';
-import { validateCommandModule } from './validate/validate.command';
+import { generateCommandModule } from './commands/generate/generate.command';
+import { handleError } from './commands/utils';
+import { validateCommandModule } from './commands/validate/validate.command';
 
 void yargs(hideBin(process.argv))
 	.scriptName('kodgen')

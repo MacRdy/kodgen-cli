@@ -11,7 +11,7 @@ import {
 } from 'kodgen';
 import { OpenAPI } from 'openapi-types';
 import { Arguments } from 'yargs';
-import configSchema from '../../assets/generate-command-schema.json';
+import configSchema from '../../../assets/generate-command-schema.json';
 import { loadFileIfExists } from '../utils';
 import { IGenerateCommandArgs, IGenerateCommandConfig } from './generate-command.model';
 

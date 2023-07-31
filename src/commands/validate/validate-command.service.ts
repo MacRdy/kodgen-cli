@@ -2,7 +2,7 @@ import Ajv from 'ajv';
 import { LoadService, ParserService, Printer, generateAjvErrorMessage } from 'kodgen';
 import { OpenAPI } from 'openapi-types';
 import { Arguments } from 'yargs';
-import configSchema from '../../assets/validate-command-schema.json';
+import configSchema from '../../../assets/validate-command-schema.json';
 import { loadFileIfExists } from '../utils';
 import { IValidateCommandArgs, IValidateCommandConfig } from './validate-command.model';
 
