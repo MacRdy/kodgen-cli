@@ -32,6 +32,8 @@ jobs:
       - run: npm ci
         if: ${{ steps.release.outputs.release_created }}
       - run: npm pack
+        if: ${{ steps.release.outputs.release_created }}
+      - run: npm publish ${{ env.PACKAGE_NAME }}-${{ steps.release.outputs.major }}.${{ steps.release.outputs.minor }}.${{ steps.release.outputs.patch }}.tgz
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
         if: ${{ steps.release.outputs.release_created }}
