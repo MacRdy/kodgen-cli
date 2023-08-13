@@ -35,10 +35,13 @@ jobs:
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
         if: ${{ steps.release.outputs.release_created }}
+      - run: ls -la
+        working-directory: ./dist
+        if: ${{ steps.release.outputs.release_created }}
       - name: Upload Release Artifact
         run: |
           ls -la
-          gh release upload ${{ steps.release.outputs.tag_name }} ./${{ env.PACKAGE_NAME }}-${{ steps.release.outputs.major }}.${{ steps.release.outputs.minor }}.${{ steps.release.outputs.patch }}.tgz
+          gh release upload ${{ steps.release.outputs.tag_name }} ./dist/${{ env.PACKAGE_NAME }}-${{ steps.release.outputs.major }}.${{ steps.release.outputs.minor }}.${{ steps.release.outputs.patch }}.tgz
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         if: ${{ steps.release.outputs.release_created }}
