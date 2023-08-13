@@ -1,0 +1,41 @@
+name: release-please
+
+on:
+  push:
+    branches:
+      - main
+
+env:
+  PACKAGE_NAME: 'kodgen-cli'
+
+jobs:
+  release-please:
+    runs-on: ubuntu-latest
+    permissions:
+        contents: write
+        pull-requests: write
+    steps:
+      - uses: google-github-actions/release-please-action@v3
+        id: release
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          release-type: node
+          package-name: ${{ env.PACKAGE_NAME }}
+      - uses: actions/checkout@v2
+        if: ${{ steps.release.outputs.release_created }}
+      - uses: actions/setup-node@v1
+        with:
+          node-version: 18.x
+          registry-url: 'https://registry.npmjs.org'
+        if: ${{ steps.release.outputs.release_created }}
+      - run: npm ci
+        if: ${{ steps.release.outputs.release_created }}
+      - run: npm publish --dry-run
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+        if: ${{ steps.release.outputs.release_created }}
+      - run:
+          gh release upload ${{ steps.release.outputs.tag_name }} ./${{ env.PACKAGE_NAME }}-${{ steps.release.outputs.major }}.${{ steps.release.outputs.minor }}.${{ steps.release.outputs.patch }}.tgz
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        if: ${{ steps.release.outputs.release_created }}
