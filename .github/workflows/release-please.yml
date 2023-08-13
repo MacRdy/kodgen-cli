@@ -18,8 +18,9 @@ jobs:
       - uses: google-github-actions/release-please-action@v3
         id: release
         with:
-          token: ${{ secrets.GITHUB_TOKEN }}
           release-type: node
+          bump-minor-pre-major: true
+          pull-request-title-pattern: 'chore: release ${version}'
           package-name: ${{ env.PACKAGE_NAME }}
       - uses: actions/checkout@v2
         if: ${{ steps.release.outputs.release_created }}
