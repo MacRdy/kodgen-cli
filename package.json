@@ -7,7 +7,7 @@
 		"kodgen": "dist/src/index.js"
 	},
 	"scripts": {
-		"build": "rimraf dist && mkdir dist && tsc --project tsconfig.build.json",
+		"build": "rimraf dist && tsc --project tsconfig.build.json",
 		"test": "jest",
 		"lint": "eslint src/**/*.ts",
 		"format:check": "prettier --list-different \"**/*{.ts,.js,.json}\"",
