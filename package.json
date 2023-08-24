@@ -30,7 +30,7 @@
 		"dist/**/*"
 	],
 	"peerDependencies": {
-		"kodgen": "^0.0.1"
+		"kodgen": "file:kodgen-0.0.1.tgz"
 	},
 	"devDependencies": {
 		"@commitlint/cli": "^17.6.7",
@@ -52,7 +52,6 @@
 	},
 	"dependencies": {
 		"ajv": "^8.12.0",
-		"kodgen": "file:kodgen-0.0.1.tgz",
 		"openapi-types": "^12.1.3",
 		"yargs": "^17.7.2"
 	}
