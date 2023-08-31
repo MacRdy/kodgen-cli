@@ -1,4 +1,5 @@
 import { Arguments, CommandBuilder, CommandModule } from 'yargs';
+import { printLogo } from '../utils';
 import { IValidateCommandArgs } from './validate-command.model';
 import { ValidateCommandService } from './validate-command.service';
 
@@ -24,6 +25,11 @@ const validateCommandHandler = async (argv: Arguments<IValidateCommandArgs>): Pr
 	const commandService = new ValidateCommandService();
 
 	const config = await commandService.getConfig(argv);
+
+	if (!argv.silent) {
+		// config
+		printLogo();
+	}
 
 	await commandService.start(config);
 

@@ -1,5 +1,6 @@
 import { Hooks, Printer, PrinterLevel } from 'kodgen';
 import { Arguments, CommandBuilder, CommandModule } from 'yargs';
+import { printLogo } from '../utils';
 import { IGenerateCommandArgs } from './generate-command.model';
 import { GenerateCommandService } from './generate-command.service';
 
@@ -105,6 +106,10 @@ const generateCommandHandler = async (argv: Arguments<IGenerateCommandArgs>): Pr
 
 	const hooks = await commandService.loadHooks(config.hooksFile);
 	Hooks.init(hooks);
+
+	if (!config.silent) {
+		printLogo();
+	}
 
 	await commandService.start(config);
 

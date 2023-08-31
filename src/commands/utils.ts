@@ -28,3 +28,18 @@ export const loadFileIfExists = async <T>(
 
 	return await fileService.loadFile<T>(path);
 };
+
+export const printLogo = () => {
+	const logo =
+		`██╗  ██╗ ██████╗ ██████╗  ██████╗ ███████╗███╗   ██╗${EOL}` +
+		`██║ ██╔╝██╔═══██╗██╔══██╗██╔════╝ ██╔════╝████╗  ██║${EOL}` +
+		`█████╔╝ ██║   ██║██║  ██║██║  ███╗█████╗  ██╔██╗ ██║${EOL}` +
+		`██╔═██╗ ██║   ██║██║  ██║██║   ██║██╔══╝  ██║╚██╗██║${EOL}` +
+		`██║  ██╗╚██████╔╝██████╔╝╚██████╔╝███████╗██║ ╚████║${EOL}` +
+		`╚═╝  ╚═╝ ╚═════╝ ╚═════╝  ╚═════╝ ╚══════╝╚═╝  ╚═══╝`;
+
+	process.stdout.write(logo);
+
+	process.stdout.write(EOL);
+	process.stdout.write(EOL);
+};
