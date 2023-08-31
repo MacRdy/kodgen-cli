@@ -1,3 +1,4 @@
+import { Printer, PrinterLevel } from 'kodgen';
 import { Arguments, CommandBuilder, CommandModule } from 'yargs';
 import { printLogo } from '../utils';
 import { IValidateCommandArgs } from './validate-command.model';
@@ -26,8 +27,9 @@ const validateCommandHandler = async (argv: Arguments<IValidateCommandArgs>): Pr
 
 	const config = await commandService.getConfig(argv);
 
-	if (!argv.silent) {
-		// config
+	if (config.silent) {
+		Printer.setLevel(PrinterLevel.Silent);
+	} else {
 		printLogo();
 	}
 

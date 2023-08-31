@@ -9,6 +9,10 @@
 		"insecure": {
 			"type": "boolean",
 			"description": "Insecure HTTPS connection"
+		},
+		"silent": {
+			"type": "boolean",
+			"description": "Suppress all informational messages"
 		}
 	},
 	"required": ["input"]

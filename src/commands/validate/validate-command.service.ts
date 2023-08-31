@@ -40,6 +40,7 @@ export class ValidateCommandService {
 		const config: IValidateCommandArgs = {
 			input: argv.input?.trim() ?? userConfig?.input,
 			insecure: argv.insecure ?? userConfig?.insecure,
+			silent: argv.silent ?? userConfig?.silent,
 		};
 
 		const validate = new Ajv({ allErrors: true }).compile<IValidateCommandConfig>(configSchema);

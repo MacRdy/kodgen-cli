@@ -10,6 +10,7 @@ const loadFileIfExistsMock = jest.mocked(loadFileIfExists);
 const correctConfig: IValidateCommandConfig = {
 	input: 'input',
 	insecure: true,
+	silent: true,
 };
 
 describe('validate cli command', () => {
@@ -25,6 +26,7 @@ describe('validate cli command', () => {
 			_: [],
 			input: ' input ',
 			insecure: true,
+			silent: true,
 		};
 
 		const config = await service.getConfig(args);
@@ -58,6 +60,7 @@ describe('validate cli command', () => {
 			_: [],
 			config: 'config.json',
 			input: 'inputOverride',
+			silent: true,
 		};
 
 		const config = await service.getConfig(args as Arguments<IValidateCommandArgs>);
