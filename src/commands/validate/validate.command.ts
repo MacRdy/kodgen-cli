@@ -19,6 +19,10 @@ const validateCommandBuilder: CommandBuilder<Record<string, never>, IValidateCom
 			type: 'boolean',
 			description: 'Insecure HTTPS connection',
 		})
+		.option('silent', {
+			type: 'boolean',
+			description: 'Suppress all informational messages',
+		})
 		.version(false)
 		.strict();
 
