@@ -69,7 +69,7 @@
 		},
 		"baseUrl": {
 			"type": "string",
-			"description": "Override base server url"
+			"description": "Overrides default base url"
 		},
 		"silent": {
 			"type": "boolean",

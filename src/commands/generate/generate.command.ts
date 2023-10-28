@@ -78,7 +78,7 @@ const generateCommandBuilder: CommandBuilder<Record<string, never>, IGenerateCom
 		})
 		.option('baseUrl', {
 			type: 'string',
-			description: 'Override base server url',
+			description: 'Overrides default base url',
 		})
 		.option('silent', {
 			type: 'boolean',

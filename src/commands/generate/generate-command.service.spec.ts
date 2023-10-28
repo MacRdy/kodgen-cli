@@ -131,6 +131,7 @@ describe('generate cli command', () => {
 			skipValidation: undefined,
 			templateDataFile: undefined,
 			templateDir: undefined,
+			baseUrl: undefined,
 			silent: undefined,
 			verbose: undefined,
 			eol: undefined,
