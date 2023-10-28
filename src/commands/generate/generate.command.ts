@@ -76,6 +76,10 @@ const generateCommandBuilder: CommandBuilder<Record<string, never>, IGenerateCom
 			type: 'string',
 			description: 'Hooks file',
 		})
+		.option('baseUrl', {
+			type: 'string',
+			description: 'Override base server url',
+		})
 		.option('silent', {
 			type: 'boolean',
 			description: 'Suppress all informational messages',

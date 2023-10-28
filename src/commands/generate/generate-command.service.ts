@@ -92,6 +92,7 @@ export class GenerateCommandService {
 			excludePaths: argv.excludePaths ?? userConfig?.excludePaths,
 			hooksFile:
 				argv.hooksFile?.trim() ?? this.normalizePath(userConfig?.hooksFile, argv.config),
+			baseUrl: argv.baseUrl?.trim() ?? userConfig?.baseUrl,
 			silent: argv.silent ?? userConfig?.silent,
 			verbose: argv.verbose ?? userConfig?.verbose,
 			eol: argv.eol ?? userConfig?.eol,

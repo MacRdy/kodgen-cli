@@ -67,6 +67,10 @@
 			"type": "string",
 			"description": "Hooks file"
 		},
+		"baseUrl": {
+			"type": "string",
+			"description": "Override base server url"
+		},
 		"silent": {
 			"type": "boolean",
 			"description": "Suppress all informational messages"
